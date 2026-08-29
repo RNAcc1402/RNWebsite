@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>REZNO</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+    --red:#e11d48;
+    --red2:#fb7185;
+    --dark:#050505;
+    --card:rgba(255,255,255,.045);
+    --border:rgba(255,255,255,.11);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:#fff;
+    font-family:Vazirmatn,Tahoma,sans-serif;
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    pointer-events:none;
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    z-index:-4;
+    opacity:.15;
+    background-image:
+        linear-gradient(rgba(225,29,72,.13) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(225,29,72,.13) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+
+.glow{
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:var(--red);
+    filter:blur(150px);
+    opacity:.13;
+    z-index:-3;
+    pointer-events:none;
+}
+
+.glow.one{
+    top:-250px;
+    right:-200px;
+}
+
+.glow.two{
+    bottom:-300px;
+    left:-200px;
+}
+
+/* =========================
+   NAV
+========================= */
+
+nav{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1000px,calc(100% - 30px));
+    height:58px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:rgba(5,5,5,.65);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    z-index:100;
+}
+
+.logo{
+    font-weight:900;
+    font-size:20px;
+    letter-spacing:3px;
+}
+
+.logo span{
+    color:var(--red);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    color:#777;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 15px #22c55e;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    height:100vh;
+    min-height:650px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    perspective:1200px;
+}
+
+.hero-inner{
+    transition:transform .12s ease-out;
+}
+
+.mini{
+    color:var(--red2);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:3px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:clamp(90px,18vw,220px);
+    font-weight:900;
+    line-height:.75;
+    letter-spacing:-10px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #fff 20%,
+            var(--red2) 40%,
+            var(--red) 55%,
+            #fff 75%
+        );
+
+    background-size:300%;
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:gradient 5s linear infinite;
+
+    filter:
+        drop-shadow(0 0 30px rgba(225,29,72,.2));
+}
+
+@keyframes gradient{
+    0%{background-position:0}
+    100%{background-position:300%}
+}
+
+.hero-sub{
+    margin-top:35px;
+    font-size:18px;
+    color:#888;
+}
+
+.hero-sub b{
+    color:white;
+}
+
+/* =========================
+   NUMBERS
+========================= */
+
+.section{
+    width:min(1100px,calc(100% - 30px));
+    margin:auto;
+    padding:130px 0;
+}
+
+.numbers{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.number{
+    height:230px;
+    border:1px solid var(--border);
+    border-radius:28px;
+    background:var(--card);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+    transition:.4s;
+}
+
+.number::before{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:var(--red);
+    filter:blur(80px);
+    opacity:.12;
+}
+
+.number:hover{
+    transform:
+        translateY(-10px)
+        rotateX(5deg);
+    border-color:rgba(225,29,72,.5);
+}
+
+.number strong{
+    font-size:75px;
+    line-height:1;
+    font-weight:900;
+    position:relative;
+}
+
+.number span{
+    color:#666;
+    margin-top:15px;
+    font-size:12px;
+}
+
+/* =========================
+   TEAM
+========================= */
+
+.title{
+    font-size:clamp(40px,7vw,75px);
+    font-weight:900;
+    margin-bottom:45px;
+}
+
+.title span{
+    color:#444;
+}
+
+.team{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.person{
+    height:430px;
+    border:1px solid var(--border);
+    border-radius:32px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(225,29,72,.2),
+            transparent 35%
+        ),
+        rgba(255,255,255,.035);
+
+    transform-style:preserve-3d;
+    transition:
+        transform .12s ease-out,
+        border .3s;
+}
+
+.person:hover{
+    border-color:rgba(225,29,72,.55);
+}
+
+.person-number{
+    position:absolute;
+    top:25px;
+    left:28px;
+    font-size:11px;
+    color:#555;
+    direction:ltr;
+}
+
+.person-content{
+    position:absolute;
+    bottom:30px;
+    right:30px;
+    left:30px;
+    transform:translateZ(40px);
+}
+
+.avatar{
+    width:90px;
+    height:90px;
+    border-radius:25px;
+    border:1px solid rgba(225,29,72,.35);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(225,29,72,.2),
+            rgba(255,255,255,.03)
+        );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    margin-bottom:25px;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.5),
+        inset 0 0 30px rgba(225,29,72,.08);
+}
+
+.person h2{
+    font-size:29px;
+    margin-bottom:8px;
+}
+
+.roles{
+    color:var(--red2);
+    font-size:12px;
+    line-height:2;
+}
+
+/* =========================
+   PROJECT
+========================= */
+
+.project{
+    min-height:570px;
+    border:1px solid rgba(225,29,72,.3);
+    border-radius:35px;
+    overflow:hidden;
+    position:relative;
+    background:
+        radial-gradient(
+            circle at 25% 40%,
+            rgba(225,29,72,.2),
+            transparent 35%
+        ),
+        #090909;
+    padding:60px;
+}
+
+.project::after{
+    content:"20";
+    position:absolute;
+    left:-50px;
+    bottom:-120px;
+    font-size:400px;
+    line-height:1;
+    font-weight:900;
+    color:rgba(225,29,72,.035);
+    pointer-events:none;
+}
+
+.project-content{
+    position:relative;
+    z-index:2;
+}
+
+.project-label{
+    color:var(--red2);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:25px;
+}
+
+.project h2{
+    font-size:clamp(60px,10vw,125px);
+    line-height:.85;
+    font-weight:900;
+}
+
+.project h2 span{
+    color:var(--red);
+}
+
+.project-info{
+    margin-top:35px;
+    color:#777;
+    font-size:13px;
+    line-height:2;
+    max-width:550px;
+}
+
+.status{
+    margin-top:30px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#aaa;
+    font-size:11px;
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+    background:var(--red);
+    border-radius:50%;
+    box-shadow:0 0 15px var(--red);
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        opacity:.3;
+        transform:scale(.6);
+    }
+}
+
+/* =========================
+   3D OBJECT
+========================= */
+
+.scene{
+    position:absolute;
+    left:12%;
+    top:50%;
+    transform:translateY(-50%);
+    perspective:900px;
+}
+
+.cube{
+    width:190px;
+    height:190px;
+    position:relative;
+    transform-style:preserve-3d;
+    animation:cube 12s linear infinite;
+}
+
+.face{
+    position:absolute;
+    width:190px;
+    height:190px;
+    border:1px solid rgba(225,29,72,.6);
+    background:rgba(225,29,72,.035);
+    backdrop-filter:blur(5px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:60px;
+    color:var(--red);
+    box-shadow:
+        inset 0 0 60px rgba(225,29,72,.08),
+        0 0 40px rgba(225,29,72,.05);
+}
+
+.front{transform:translateZ(95px)}
+.back{transform:rotateY(180deg) translateZ(95px)}
+.right{transform:rotateY(90deg) translateZ(95px)}
+.left{transform:rotateY(-90deg) translateZ(95px)}
+.top{transform:rotateX(90deg) translateZ(95px)}
+.bottom{transform:rotateX(-90deg) translateZ(95px)}
+
+@keyframes cube{
+    from{
+        transform:rotateX(-20deg) rotateY(0);
+    }
+    to{
+        transform:rotateX(340deg) rotateY(360deg);
+    }
+}
+
+/* =========================
+   FINAL
+========================= */
+
+.final{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.final-ring{
+    position:absolute;
+    width:700px;
+    height:700px;
+    border:1px solid rgba(225,29,72,.12);
+    border-radius:50%;
+    animation:spin 20s linear infinite;
+}
+
+.final-ring::before,
+.final-ring::after{
+    content:"";
+    position:absolute;
+    inset:70px;
+    border:1px solid rgba(225,29,72,.1);
+    border-radius:50%;
+}
+
+.final-ring::after{
+    inset:160px;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+.final-content{
+    position:relative;
+    z-index:2;
+}
+
+.final-small{
+    color:#555;
+    font-size:11px;
+    margin-bottom:35px;
+}
+
+.final h2{
+    direction:ltr;
+    font-family:Arial,sans-serif;
+    font-size:clamp(65px,14vw,180px);
+    line-height:.8;
+    font-weight:900;
+    letter-spacing:-8px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #fff,
+            var(--red),
+            var(--red2),
+            #fff
+        );
+
+    background-size:300%;
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:gradient 3s linear infinite;
+
+    filter:
+        drop-shadow(0 0 50px rgba(225,29,72,.2));
+}
+
+.final p{
+    margin-top:40px;
+    color:#444;
+    font-size:11px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#333;
+    font-size:10px;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+
+/* =========================
+   REVEAL
+========================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:
+        opacity 1s ease,
+        transform 1s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.show{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:750px){
+
+    .numbers,
+    .team{
+        grid-template-columns:1fr;
+    }
+
+    .number{
+        height:180px;
+    }
+
+    .person{
+        height:390px;
+    }
+
+    .project{
+        padding:35px;
+    }
+
+    .scene{
+        left:50%;
+        opacity:.12;
+        transform:translate(-50%,-50%);
+    }
+
+    .project-content{
+        position:relative;
+        z-index:5;
+    }
+
+    .hero h1{
+        letter-spacing:-5px;
+    }
+
+    .final h2{
+        letter-spacing:-4px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="grid"></div>
+
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+
+<!-- NAV -->
+
+<nav>
+
+    <div class="logo">
+        REZ<span>NO</span>
+    </div>
+
+    <div class="nav-right">
+        <div class="dot"></div>
+        ONLINE
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-inner" id="hero">
+
+        <div class="mini">
+            REZNO TEAM
+        </div>
+
+        <h1>REZNO</h1>
+
+        <div class="hero-sub">
+            تیم <b>دو نفره</b>‌ای که می‌سازه.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- NUMBERS -->
+
+<section class="section reveal">
+
+    <div class="numbers">
+
+        <div class="number">
+            <strong>۲</strong>
+            <span>اعضای تیم</span>
+        </div>
+
+        <div class="number">
+            <strong>۱</strong>
+            <span>پروژه</span>
+        </div>
+
+        <div class="number">
+            <strong>∞</strong>
+            <span>ایده</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TEAM -->
+
+<section class="section reveal">
+
+    <h2 class="title">
+        تیم<span>.</span>
+    </h2>
+
+    <div class="team">
+
+        <!-- AMIR ALI -->
+
+        <article class="person tilt">
+
+            <div class="person-number">
+                01 / BACKEND
+            </div>
+
+            <div class="person-content">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <h2>
+                    امیر علی نوری
+                </h2>
+
+                <div class="roles">
+                    Backend Dev<br>
+                    UI Designer<br>
+                    Editor
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- ARASTU -->
+
+        <article class="person tilt">
+
+            <div class="person-number">
+                02 / FULL STACK
+            </div>
+
+            <div class="person-content">
+
+                <div class="avatar">
+                    R
+                </div>
+
+                <h2>
+                    ارسطو رضایی
+                </h2>
+
+                <div class="roles">
+                    Backend Dev<br>
+                    Frontend Dev<br>
+                    Server Manager
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- PROJECT -->
+
+<section class="section reveal">
+
+    <h2 class="title">
+        پروژه<span>.</span>
+    </h2>
+
+        <div class="project">
+
+        <div class="project-content">
+<a href="https://www.20rn.ir">
+            <div class="project-label">
+                CURRENT PROJECT
+            </div>
+</a>
+            <h2>
+                مثبت<br>
+                <span>۲۰</span>
+            </h2>
+
+            <div class="project-info">
+
+                یک پلتفرم آموزشی که برای مدیریت،
+                آموزش و ارتباط بهتر بین مدرس و دانش‌آموز
+                ساخته شده است.
+
+            </div>
+
+            <div class="status">
+                <div class="status-dot"></div>
+                در حال توسعه
+            </div>
+
+        </div>
+
+    <a href="https://www.20rn.ir">
+        <div class="scene">
+
+            <div class="cube">
+
+                <div class="face front">۲۰</div>
+                <div class="face back">+</div>
+                <div class="face right">م</div>
+                <div class="face left">۲۰</div>
+                <div class="face top">+</div>
+                <div class="face bottom">✦</div>
+
+            </div>
+
+        </div>
+        </a>
+    </div>
+
+</section>
+
+
+<!-- FINAL -->
+
+<section class="final">
+
+    <div class="final-ring"></div>
+
+    <div class="final-content">
+
+        <div class="final-small">
+            THAT'S IT.
+        </div>
+
+        <h2>
+            F##K<br>
+            BILL GATES.
+        </h2>
+
+        <p>
+            REZNO — 2026
+        </p>
+
+    </div>
+
+</section>
+
+
+<footer>
+    REZNO © 2026
+</footer>
+
+
+<script>
+
+/* ==========================================
+   PARTICLES
+========================================== */
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+
+function resize(){
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+}
+
+resize();
+
+window.addEventListener("resize",resize);
+
+for(let i=0;i<100;i++){
+
+    particles.push({
+
+        x:Math.random()*innerWidth,
+        y:Math.random()*innerHeight,
+
+        size:Math.random()*2+.3,
+
+        speed:Math.random()*.5+.1,
+
+        opacity:Math.random()*.5+.1
+
+    });
+
+}
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    particles.forEach(p=>{
+
+        p.y -= p.speed;
+
+        if(p.y < -10){
+
+            p.y = canvas.height + 10;
+            p.x = Math.random()*canvas.width;
+
+        }
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+            `rgba(225,29,72,${p.opacity})`;
+
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(draw);
+
+}
+
+draw();
+
+
+/* ==========================================
+   HERO 3D
+========================================== */
+
+const hero = document.querySelector(".hero-inner");
+
+document.querySelector(".hero")
+.addEventListener("mousemove",e=>{
+
+    const x =
+        (e.clientX / innerWidth - .5);
+
+    const y =
+        (e.clientY / innerHeight - .5);
+
+    hero.style.transform = `
+        rotateX(${-y*8}deg)
+        rotateY(${x*10}deg)
+        translateZ(30px)
+    `;
+
+});
+
+document.querySelector(".hero")
+.addEventListener("mouseleave",()=>{
+
+    hero.style.transform = "";
+
+});
+
+
+/* ==========================================
+   3D TEAM CARDS
+========================================== */
+
+document.querySelectorAll(".tilt")
+.forEach(card=>{
+
+    card.addEventListener("mousemove",e=>{
+
+        const r =
+            card.getBoundingClientRect();
+
+        const x =
+            (e.clientX-r.left)/r.width-.5;
+
+        const y =
+            (e.clientY-r.top)/r.height-.5;
+
+        card.style.transform = `
+            perspective(900px)
+            rotateX(${-y*9}deg)
+            rotateY(${x*9}deg)
+            translateZ(15px)
+        `;
+
+    });
+
+    card.addEventListener("mouseleave",()=>{
+
+        card.style.transform =
+            "perspective(900px) rotateX(0) rotateY(0)";
+
+    });
+
+});
+
+
+/* ==========================================
+   SCROLL REVEAL
+========================================== */
+
+const observer =
+new IntersectionObserver(entries=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+},{threshold:.12});
+
+
+document.querySelectorAll(".reveal")
+.forEach(el=>observer.observe(el));
+
+
+/* ==========================================
+   MOUSE GLOW
+========================================== */
+
+const glow1 =
+document.querySelector(".glow.one");
+
+const glow2 =
+document.querySelector(".glow.two");
+
+document.addEventListener("mousemove",e=>{
+
+    const x =
+        (e.clientX/innerWidth-.5)*2;
+
+    const y =
+        (e.clientY/innerHeight-.5)*2;
+
+    glow1.style.transform =
+        `translate(${x*100}px,${y*100}px)`;
+
+    glow2.style.transform =
+        `translate(${-x*100}px,${-y*100}px)`;
+
+});
+
+
+/* ==========================================
+   CLICK RIPPLE
+========================================== */
+
+document.addEventListener("click",e=>{
+
+    const ripple =
+        document.createElement("div");
+
+    ripple.style.position="fixed";
+    ripple.style.left=e.clientX+"px";
+    ripple.style.top=e.clientY+"px";
+    ripple.style.width="10px";
+    ripple.style.height="10px";
+    ripple.style.border=
+        "1px solid rgba(225,29,72,.8)";
+    ripple.style.borderRadius="50%";
+    ripple.style.pointerEvents="none";
+    ripple.style.zIndex="9999";
+    ripple.style.transform=
+        "translate(-50%,-50%)";
+
+    document.body.appendChild(ripple);
+
+    ripple.animate(
+
+        [
+            {
+                width:"10px",
+                height:"10px",
+                opacity:1
+            },
+            {
+                width:"200px",
+                height:"200px",
+                opacity:0
+            }
+        ],
+
+        {
+            duration:700,
+            easing:"cubic-bezier(.2,.8,.2,1)"
+        }
+
+    ).onfinish=()=>{
+        ripple.remove();
+    };
+
+});
+
+</script>
+
+</body>
+</html>
